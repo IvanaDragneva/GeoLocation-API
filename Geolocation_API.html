@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Geolocation API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav>
+    <ul class="list-style">
+        <li><a href="#introduction">Въведение</a></li>
+        <li><a href="#howItWorks">Как работи Geolocation API?</a></li>
+        <li><a href="#parameters">Параметри</a></li>
+        <ul class="list-style">
+            <li><a href="#inputParameters">Входни параметри</a></li>
+            <li><a href="#outputParameters">Изходни параметри</a></li>
+        </ul>
+        <li><a href="#properties">Geolocation API свойства</a></li>
+        <ul class="list-style">
+            <li><a href="#firstMethod">getCurrentPosition()</a></li>
+            <li><a href="#secondMethod">watchPosition()</a></li>
+            <li><a href="#thirdMethod">clearWatch()</a></li>
+        </ul>
+        <li><a href="#useCases">Потребителски случаи на Geolocation API</a></li>
+        <li><a href="#sources">Източници</a></li>
+    </ul>
+</nav>
+
+<header>
+    <h1>Geolocation API</h1>
+</header>
+<article>
+    <section>
+        <h3 id="introduction">Въведение</h3>
+        <p>
+            Geolocation API е комуникационен интерфейс между клиентско устройство или приложение (от страна на клиента) и приложение или услуга (от страна на сървъра), който идентифицира и връща местоположението на клиента и радиуса на точност въз основа на информация за клетъчни кули и WiFi възли. Изходните параметри могат да включват подробности за валутата, използвана на това място, часовата зона и дори дали страната е членка на ЕС.
+            Извиква се, когато има нужда от програмно конфигуриране на уеб или мобилно приложение въз основа на местоположението на потребителя и често срещаните случаи на използване включват навигация в реално време на картата и геопроследяване, обслужване на контекстни реклами, внедряване на проверки за сигурност на потребителите и приспособяване на съдържание към определени региони.
+
+        </p>
+    </section>
+    <section>
+        <h3 id="howItWorks">Как работи Geolocation API?</h3>
+        <p>Geolocation API не съхранява никаква информация в себе си, а по-скоро предоставя възможност за събиране на съществуваща информация от запитаното устройство. Той може да събира информация за местоположението от източници като IP адрес, GPS, WiFi, Bluetooth, RFID, GSM/CDMA ID или потребителски вход. След като заявката за API е завършена, местоположението за „най-добро предположение“ с координати се връща на извикващото приложение в JSON. Комуникацията се извършва през HTTPS с помощта на POST заявка. Заявката и отговорът са форматирани като JSON, а типът на съдържанието и на двете е application/json.
+            Потребителят обаче трябва изрично да разреши на приложението или на бръузъра да използва местоположението му.</p>
+    </section>
+    <section>
+        <h3 id="parameters">Параметри</h3>
+        <h4 id="inputParameters"><i>Входни параметри</i></h4>
+        <p>
+            Обикновено заявка за информация за местоположение към IP геолокация е от устройство, напр. компютър или мобилен телефон, който предоставя един или повече от следните входни параметри: IP адрес, MAC адрес, RFID, GPS координати, клетъчна кула (например GSM, WCDMA или CDMA) ID или WiFi позиция. Потребителят може също да поиска информация за местоположение за място или организация по име.
+        </p>
+        <h4 id="outputParameters"><i>Изходни параметри</i></h4>
+        <p>
+            Geolocation API отправя заявка към Информационният сървър за местоположение (Location information server - LIS), който връща различни свойства за местоположение, включително точността на информацията, на която предава. След това API-то връща тази информация на клиента. Мястото, откъдето API-то получава информация е прозрачно и интерфейсът не запазва никакви данни.
+            Информацията, предоставяна от типичния Geolocation API, варира, но може да включва следното:
+        </p>
+        <ul>
+            <li>Физически адрес - напр. държава, град, регион, континент, пощенски код, географска ширина и дължина и дали страната е членка на ЕС.</li>
+            <li>IP адрес и подробности за ISP - Включително информация за това дали IP е прокси адрес.</li>
+            <li>Оператор – име на мобилен оператор, код на региона и код на мрежата.</li>
+            <li>Местни данни - Данни за часовата зона (включително лятно часово време), език (включително множество официални езици) и валута (включително символ на валута и описание).</li>
+            <li>Информация за заплахата – дали IP адресът е бил източник на злонамерена дейност.</li>
+        </ul>
+    </section>
+    <section >
+        <h3 id="properties">Geolocation API свойства</h3>
+        <p>
+            Всички основни уеб браузъри (Firefox, Chrome, Safari, Opera) поддържат Geolocation API и се използва широко на мобилни устройства като Android, iOS, Windows Phone и Maemo.
+            Geolocation API може да бъде достъпен със свойството Geolocation като част от обекта Navigator. Свойството Geolocation включва набор от три метода, а именно:
+        </p>
+        <ul>
+            <li id="firstMethod">getCurrentPosition() – Методът getCurrentPosition извлича текущото географско местоположение на устройството. Местоположението се изразява като набор от географски координати заедно с информация за посоката и скоростта. Информацията за местоположението се връща в обект Position. Синтаксис на метода: getCurrentPosition(showLocation, ErrorHandler, options);
+                Методът getCurrentPosition не връща стойност.</li>
+            <img src="loc1.gif">
+            <a href="#fig1" class="image-code-reference">Фигура 1. Gif визуализация на метода getCurrentPosition()</a>
+            <ul>Списък с параметри:
+                <li id="firstParameter">
+                    showLocation – Това определя метода за обратно извикване, който извлича информацията за местоположението. Този метод се извиква асинхронно с обект, съответстващ на обекта Position, който съхранява върнатата информация за местоположение.
+                </li>
+                <li id="secondParameter">
+                    ErrorHandler – Този незадължителен параметър определя метода за обратно извикване, който се извиква, когато възникне грешка при обработката на асинхронното повикване. Този метод се извиква с обекта PositionError, който съхранява върнатата информация за грешка.
+                </li>
+                <li id="thirdParameter">
+                    options – Този незадължителен параметър определя набор от опции за извличане на информация за местоположението. Можете да посочите (а) точност на върнатата информация за местоположението (б) изчакване за извличане на информацията за местоположението и (в) използване на кеширана информация за местоположение.
+                </li>
+            </ul>
+            <pre class="code-container">
+                <code>
+            function showLocation(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                alert("Географска ширина : " + latitude + " Географска дължина: " + longitude);
+            }
+
+            function errorHandler(err) {
+                if(err.code == 1) {
+                    alert("Error: Access is denied!");
+                } else if( err.code == 2) {
+                    alert("Error: Position is unavailable!");
+                }
+            }
+
+            function getLocation() {
+                if(navigator.geolocation) {
+                    // timeout at 60000 milliseconds (60 seconds)
+                    var options = {timeout:60000};
+                    navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+                } else {
+                    alert("Sorry, browser does not support geolocation!");
+                }
+            }
+                </code>
+        </pre>
+            <a href="#fig1" class="image-code-reference">Код 1: примерен код за метода getCurrentPosition()</a>
+
+            <li id="secondMethod">watchPosition() – Стартира операция за наблюдение, която добавя текущата позиция към обект Position и допитва устройството за системни събития, които показват всякакви промени в местоположението. Когато са налични нови данни за местоположение, обектът Позиция се актуализира, за да отразява новата позиция. Както в getCurrentPosition(), по избор можете да зададете обратно извикване за грешка и допълнителни опции (точност, изчакване и максимална възраст).</li>
+            <img src="one.gif">
+            <a href="#fig2" class="image-code-reference">Фигура 2. Gif визуализация на метода watchPosition()</a>
+            <pre class="code-container">
+                <code>
+
+        var variable1 = document.getElementById("paraID");
+
+        //Функцията връща текущата локация
+        function getlocation() {
+            navigator.geolocation.watchPosition(showLoc);
+        }
+
+        //Тук се изчислява надморската височина спрямо локацията
+        function showLoc(pos) {
+            variable1.innerHTML = "Altitude: " +
+                pos.coords.altitude;
+        }
+                </code>
+        </pre>
+            <a href="#fig2" class="image-code-reference">Код 2: примерен код за метода watchPosition()</a>
+            <li id="thirdMethod">clearWatch() – Методът clearWatch отменя текущо извикване на watchPosition. Когато бъде отменено, повикването watchPosition спира да извлича актуализации за текущото географско местоположение на устройството.</li>
+            <img src="clearwatch.gif">
+            <a href="#fig3" class="image-code-reference">Фигура 3. Gif визуализация на метода clearWatch()</a>
+            <pre class="code-container">
+                <code>
+    var id, target, option;
+
+    var clearId;
+        var demoPara = document.getElementById("demo");
+        var user_loc = navigator.geolocation;
+
+        function getPosition() {
+            if (user_loc) {
+                var option = { timeout: 50000 }
+                clearId = user_loc.watchPosition(
+                    currentLoc, resolveError, option);
+            }
+            else {
+                "Your browser doesn't support Geolocation API.";
+            }
+        }
+
+        function currentLoc(loc) {
+            var lat = loc.coords.latitude;
+            var long = loc.coords.longitude;
+            demoPara.innerHTML = "Географска ширина: "
+                + lat + ", Географска дължина: " + long;
+        }
+
+        function resolveError(err) {
+            demoPara.innerHTML = "ERROR"
+                + err.code + ": " + err.message;
+        }
+
+        function clearPosition() {
+            demoPara.innerHTML = user_loc.clearWatch(clearId);
+        }
+                </code>
+        </pre>
+            <a href="#fig3" class="image-code-reference">Код 3: примерен код за метода clearWatch()</a>
+        </ul>
+    </section>
+    <section>
+        <h3 id="useCases">Потребителски случаи на Geolocation API</h3>
+        <p>От съпоставянето на хора, търсещи романтика  единомишленици в техния район, до даването на възможност на бизнеса да проследява своите клиенти, геолокацията се използва предимно за географско персонализиране на цифровото изживяване на потребителя.</p>
+        <ul>
+            <li>Контекст на браузъра – Когато потребител търси в интернет, браузърът може да поиска неговото местоположение, за да предостави информация, специфична за локала, която е от значение за заявката му, напр. фирми, разположени в неговия район или местни новини.</li>
+            <li>Доклади за времето - Ако някой иска да провери времето на телефона си, устройството ще трябва да е с включено местоположението от настройките на телефона.</li>
+            <li>Актуализации на социалните медии – Приложения като Facebook използват API за местоположение, така че потребителите да могат да маркират местоположенията си в своите актуализации на състоянието, например, като покажат на приятелите си къде почиват.</li>
+            <li>Заетост и бизнес мрежи – Уебсайтовете за търсене на работа използват геолокация, за да съпоставят търсещите работа с възможностите, налични в техния район.</li>
+            <li>Цифрови карти - Непрестанно се случва някой да бъде изгубен в определен град. Тогава, за да се определи местоположението и да се намери най-бързият маршрут от т.А до т.Б, се използва помощта на Google Maps.</li>
+            <li>Маркетинг и ангажираност с клиенти – уеб приложенията използват Geolocation API, за да наблюдават позицията на потребителя, когато е навън и в града. Например, когато човек ходи да пазарува, приложение може да го предупреди за текущи специални предложения в конкретен магазин или да предложи ресторанти в района въз основа на предварително установените кулинарни предпочитания на потребителя.</li>
+            <li>Проследяване на IoT устройства – Устройствата за интелигентен дом или преносимите устройства и превозните средства могат лесно да бъдат проследени или локализирани с геолокация.</li>
+            <li>Киберсигурност – Геолокацията може да се използва за проследяване на мрежови нарушители или подозрителни влизания в системата; идентифицират кога и къде се извършват лоши онлайн транзакции; и се открива сенчестата организация зад един IP адрес.</li>
+        </ul>
+    </section>
+</article>
+
+<footer>
+        <h3 id="sources">Източници</h3>
+        <ol>
+            <li>W3Schools, HTML Geolocation API, <a href="https://www.w3schools.com/html/html5_geolocation.asp" target="_blank">[https://www.w3schools.com/html/html5_geolocation.asp]</a>, публикувано на: 17.09.2012</li>
+            <li>Developer Mozilla, Geolocation API, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API" target="_blank">[https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API]</a>, публикувано на: 15.05.2022</li>
+            <li>W3C Proposed Recommendation, <a href="https://www.w3.org/TR/geolocation/" target="_blank">[https://www.w3.org/TR/geolocation/]</a>, публикувано на: 15.05.2021</li>
+            <li>PubNub, An ever-growing repository of technical terms around real-time technology and beyond, <a href="https://www.pubnub.com/learn/glossary/what-is-a-geolocation-api/" target="_blank">[https://www.pubnub.com/learn/glossary/what-is-a-geolocation-api/]</a>, публикувано на: 20.09.2020</li>
+            <li>Google Maps Platform, Geolocation API, <a href="https://developers.google.com/maps/documentation/geolocation/overview" target="_blank">[https://developers.google.com/maps/documentation/geolocation/overview]</a>, публикувано на: 17.07.2020</li>
+            <li>Geolocation getCurrentPosition() API, <a href="https://www.tutorialspoint.com/html5/geolocation_getcurrentposition.htm" target="_blank">[https://www.tutorialspoint.com/html5/geolocation_getcurrentposition.htm]</a>, публикувано на: 07.09.2010</li>
+            <li>Geolocation watchPosition() API, <a href="https://www.tutorialspoint.com/html5/geolocation_watchposition.htm" target="_blank">[https://www.tutorialspoint.com/html5/geolocation_watchposition.htm]</a>, публикувано на: 07.09.2010</li>
+            <li>Geolocation clearWatch() API, <a href="https://www.tutorialspoint.com/html5/geolocation_clearwatch.htm" target="_blank">[https://www.tutorialspoint.com/html5/geolocation_clearwatch.htm]</a>, публикувано на: 07.09.2010</li>
+            <li id="fig1">How to locate the user’s position in HTML?, <a href="https://www.geeksforgeeks.org/how-to-locate-the-users-position-in-html/" target="_blank">[https://www.geeksforgeeks.org/how-to-locate-the-users-position-in-html/]</a>, публикувано на: 25.01.2022</li>
+            <li id="fig2">HTML Geolocation watchPosition() Method, <a href="https://www.geeksforgeeks.org/html-geolocation-watchposition-method/" target="_blank">[https://www.geeksforgeeks.org/html-geolocation-watchposition-method/]</a>, публикувано на: 25.01.2022</li>
+            <li id="fig3">HTML Geolocation clearWatch() Method, <a href="https://www.geeksforgeeks.org/html-geolocation-clearwatch-method/" target="_blank">[https://www.geeksforgeeks.org/html-geolocation-clearwatch-method/]</a>, публикувано на: 25.01.2022</li>
+        </ol>
+</footer>
+
+</body>
+</html>
